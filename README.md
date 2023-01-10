@@ -9,6 +9,10 @@ To complete the exercices please implement all missing classes and functonalites
 Once you are ready, please send it to me (ie link to your git repository) before  our interview.
 
 
+## TODO
+* Fix problem so you add a category to a task
+* Add tests
+
 # My Comments
 * Start with ```./gradlew bootRun```
 
