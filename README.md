@@ -10,11 +10,17 @@ Once you are ready, please send it to me (ie link to your git repository) before
 
 
 ## TODO
-* Fix problem so you add a category to a task
 * Add tests
 
 # My Comments
 * Start with ```./gradlew bootRun```
+
+* There are some default Categories created on startup. To list them send the GET request:
+```
+GET /categories
+```
+
+
 
 
 
