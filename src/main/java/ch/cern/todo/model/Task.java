@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 @Table(name = "TASKS")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TASK_ID")
-    private Long id;
+    private Long taskId;
 
     @Column(name = "TASK_NAME", length = 100)
     private String taskName;
@@ -27,20 +27,20 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, String taskName, String taskDescription, LocalDateTime deadline, TaskCategory taskCategory) {
-        this.id = id;
+    public Task(Long taskId, String taskName, String taskDescription, LocalDateTime deadline, TaskCategory taskCategory) {
+        this.taskId = taskId;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.deadline = deadline;
         this.taskCategory = taskCategory;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTaskId() {
+        return taskId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
     public String getTaskName() {
@@ -67,11 +67,11 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public TaskCategory getCategory() {
+    public TaskCategory getTaskCategory() {
         return taskCategory;
     }
 
-    public void setCategory(TaskCategory taskCategory) {
+    public void setTaskCategory(TaskCategory taskCategory) {
         this.taskCategory = taskCategory;
     }
 }

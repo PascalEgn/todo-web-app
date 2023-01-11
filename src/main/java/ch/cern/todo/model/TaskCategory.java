@@ -10,7 +10,7 @@ import java.util.List;
 @JsonIgnoreProperties("tasks")
 public class TaskCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CATEGORY_ID")
     private Long categoryId;
 
@@ -37,8 +37,8 @@ public class TaskCategory {
         return categoryId;
     }
 
-    public void setCategoryId(Long id) {
-        this.categoryId = id;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategoryName() {
