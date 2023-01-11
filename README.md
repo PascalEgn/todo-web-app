@@ -128,8 +128,8 @@ DELETE /tasks/delete/{taskId}
 ```
 
 
-# Known Issue:
+# Known Issues:
 * If a category gets deleted, all related tasks also get deleted
 * If you list a category, the related tasks are not listed (This is to prevent recursion resulting in an endless 
 response json. I don't know if there is a better solution for this problem. Currently, I am using ```JsonIgnoreProperties``` to prevent the problem)
-* There are no tests 
+* Tests missing for category CRUD operations (and their interaction with tasks...).  
