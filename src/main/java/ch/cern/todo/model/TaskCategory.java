@@ -1,58 +1,60 @@
 package ch.cern.todo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.List;
 
 
 @Entity
 @Table(name = "TASK_CATEGORIES")
+@JsonIgnoreProperties("tasks")
 public class TaskCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CATEGORY_ID")
-    private Long id;
+    private Long categoryId;
 
     @Column(name = "CATEGORY_NAME", length = 100)
-    private String name;
+    private String categoryName;
 
     @Column(name = "CATEGORY_DESCRIPTION", length = 500)
-    private String description;
+    private String categoryDescription;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "taskCategory", cascade = CascadeType.ALL)
     private List<Task> tasks;
 
     public TaskCategory() {
     }
 
-    public TaskCategory(Long id, String name, String description, List<Task> tasks) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    public TaskCategory(Long categoryId, String categoryName, String categoryDescription, List<Task> tasks) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.categoryDescription = categoryDescription;
         this.tasks = tasks;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCategoryId(Long id) {
+        this.categoryId = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategoryDescription() {
+        return categoryDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategoryDescription(String categoryDescription) {
+        this.categoryDescription = categoryDescription;
     }
 
     public List<Task> getTasks() {

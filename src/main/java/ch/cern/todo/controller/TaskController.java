@@ -19,27 +19,27 @@ public class TaskController {
         return (List<Task>) taskRepository.findAll();
     }
 
-    @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskRepository.save(task);
-
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable(value = "id") Long id) {
+    @GetMapping("/{taskId}")
+    public ResponseEntity<Task> getTaskById(@PathVariable(value = "taskId") Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
         return ResponseEntity.ok().body(task);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable(value = "id") Long id,
+    @PostMapping("/create")
+    public Task createTask(@RequestBody Task task) {
+        return taskRepository.save(task);
+    }
+
+
+    @PutMapping("/update/{taskId}")
+    public ResponseEntity<Task> updateTask(@PathVariable(value = "taskId") Long id,
                                            @RequestBody Task taskDetails) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
 
-        task.setName(taskDetails.getName());
-        task.setDescription(taskDetails.getDescription());
+        task.setTaskName(taskDetails.getTaskName());
+        task.setTaskDescription(taskDetails.getTaskDescription());
         task.setDeadline(taskDetails.getDeadline());
         task.setCategory(taskDetails.getCategory());
 
@@ -47,8 +47,8 @@ public class TaskController {
         return ResponseEntity.ok(updatedTask);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Task> deleteTask(@PathVariable(value = "id") Long id) {
+    @DeleteMapping("/delete/{taskId}")
+    public ResponseEntity<Task> deleteTask(@PathVariable(value = "taskId") Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
 

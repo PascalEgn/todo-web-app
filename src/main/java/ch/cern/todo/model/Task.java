@@ -1,39 +1,38 @@
 package ch.cern.todo.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TASKS")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TASK_ID")
     private Long id;
 
     @Column(name = "TASK_NAME", length = 100)
-    private String name;
+    private String taskName;
 
     @Column(name = "TASK_DESCRIPTION", length = 500)
-    private String description;
+    private String taskDescription;
 
     @Column(name = "DEADLINE", columnDefinition = "TIMESTAMP")
-    private LocalDate deadline;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID")
-    private TaskCategory category;
+    private LocalDateTime deadline;
+
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
+    private TaskCategory taskCategory;
 
     public Task() {
     }
 
-    public Task(Long id, String name, String description, LocalDate deadline, TaskCategory category) {
+    public Task(Long id, String taskName, String taskDescription, LocalDateTime deadline, TaskCategory taskCategory) {
         this.id = id;
-        this.name = name;
-        this.description = description;
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
         this.deadline = deadline;
-        this.category = category;
+        this.taskCategory = taskCategory;
     }
 
     public Long getId() {
@@ -44,35 +43,35 @@ public class Task {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
     }
 
-    public LocalDate getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
 
     public TaskCategory getCategory() {
-        return category;
+        return taskCategory;
     }
 
-    public void setCategory(TaskCategory category) {
-        this.category = category;
+    public void setCategory(TaskCategory taskCategory) {
+        this.taskCategory = taskCategory;
     }
 }

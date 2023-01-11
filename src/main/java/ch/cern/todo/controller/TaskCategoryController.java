@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task-categories")
+@RequestMapping("/categories")
 public class TaskCategoryController {
     @Autowired
     private TaskCategoryRepository taskCategoryRepository;
@@ -19,35 +19,35 @@ public class TaskCategoryController {
         return (List<TaskCategory>) taskCategoryRepository.findAll();
     }
 
-    @PostMapping
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<TaskCategory> getTaskCategory(@PathVariable(value = "categoryId") Long categoryId) {
+        TaskCategory taskCategory = taskCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("TaskCategory", "categoryId", categoryId));
+        return ResponseEntity.ok().body(taskCategory);
+    }
+    @PostMapping("/create")
     public TaskCategory createTaskCategory(@RequestBody TaskCategory taskCategory) {
         return taskCategoryRepository.save(taskCategory);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TaskCategory> getTaskCategoryById(@PathVariable(value = "id") Long id) {
-        TaskCategory taskCategory = taskCategoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("TaskCategory", "id", id));
-        return ResponseEntity.ok().body(taskCategory);
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TaskCategory> updateTaskCategory(@PathVariable(value = "id") Long id,
+    @PutMapping("/update/{categoryId}")
+    public ResponseEntity<TaskCategory> updateTaskCategory(@PathVariable(value = "categoryId") Long categoryId,
                                                            @RequestBody TaskCategory taskCategoryDetails) {
-        TaskCategory taskCategory = taskCategoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("TaskCategory", "id", id));
+        TaskCategory taskCategory = taskCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("TaskCategory", "categoryId", categoryId));
 
-        taskCategory.setName(taskCategoryDetails.getName());
-        taskCategory.setDescription(taskCategoryDetails.getDescription());
+        taskCategory.setCategoryName(taskCategoryDetails.getCategoryName());
+        taskCategory.setCategoryDescription(taskCategoryDetails.getCategoryDescription());
 
         TaskCategory updatedTaskCategory = taskCategoryRepository.save(taskCategory);
         return ResponseEntity.ok(updatedTaskCategory);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteTaskCategory(@PathVariable(value = "id") Long id) {
-        TaskCategory taskCategory = taskCategoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("TaskCategory", "id", id));
+    @DeleteMapping("/delete/{categoryId}")
+    public ResponseEntity<Object> deleteTaskCategory(@PathVariable(value = "categoryId") Long categoryId) {
+        TaskCategory taskCategory = taskCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("TaskCategory", "categoryId", categoryId));
 
         taskCategoryRepository.delete(taskCategory);
         return ResponseEntity.ok().build();
