@@ -10,8 +10,10 @@ Once you are ready, please send it to me (ie link to your git repository) before
 
 
 # How to use
-* Start with ```./gradlew bootRun```
+* Start server with ```./gradlew bootRun```
 * The server is available at ```localhost:8080```
+
+* Start tests with ```./gradlew test```
 
 ## Categories:
 * There are some default Categories created on startup. 
