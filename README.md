@@ -9,57 +9,127 @@ To complete the exercices please implement all missing classes and functonalites
 Once you are ready, please send it to me (ie link to your git repository) before  our interview.
 
 
-## TODO
-* Add tests
-
-# My Comments
+# How to use
 * Start with ```./gradlew bootRun```
+* The server is available at ```localhost:8080```
 
-* There are some default Categories created on startup. To list them send the GET request:
+## Categories:
+* There are some default Categories created on startup. 
+
+* To list all categories:
 ```
 GET /categories
 ```
 
-
-
-
-
-1. Create: To create a new task, you would make a POST request to the /tasks endpoint, with a JSON representation of the task in the request body.
-
+* To list one specific category:
 ```
-POST /tasks
+GET /categories/{categoryId}
+```
+
+* To create additional categories:
+```
+POST /categories/create
 Content-Type: application/json
 
 {
-"name": "New Task",
-"description": "This is a new task",
-"deadline":"2022-10-12T22:00:00.000Z",
-"category": 1
+    "categoryName": "Test Category",
+    "categoryDescription": "This is a test"
 }
 ```
 
-2. Read: To retrieve a list of all tasks, you would make a GET request to the /tasks endpoint. To retrieve a specific task by ID, you would make a GET request to the /tasks/{id} endpoint, where {id} is the ID of the task you want to retrieve.
+* To edit a category:
+```
+PUT /categories/update/{categoryId}
+
+{
+        "categoryName": "Edited category",
+        "categoryDescription": "Edited category description"
+}
+```
+
+* To delete a category (also deletes all Tasks related to the category):
+```
+DELETE /categories/delete/{categoryId}
+```
+
+
+
+## Tasks:
+* To list all tasks:
 ```
 GET /tasks
-
-GET /tasks/1
 ```
 
-3. Update: To update a task, you would make a PUT request to the /tasks/{id} endpoint, where {id} is the ID of the task you want to update, and with a JSON representation of the updated task in the request body.
+* To list one specific task:
 ```
-PUT /tasks/1
-Content-Type: application/json
+GET /tasks/{taskId}
+```
+
+* To create a task:
+  * Without any category:
+  ```
+      POST /tasks/create
+      Content-Type: application/json
+    
+      {
+          "taskName": "New Task",
+          "taskDescription": "This is a new task",
+          "deadline": "2023-01-12T22:00:00.000Z"
+      }
+  ```
+  
+  * With an existing category:
+  ```
+    POST /tasks/create
+    Content-Type: application/json
+    {
+      "taskName": "New Task",
+      "taskDescription": "This is a new task",
+      "deadline": "2023-01-12T22:00:00.000Z",
+      "taskCategory": {
+          "categoryId": 1
+      }
+    }
+  ```  
+
+  * With a new category:
+  ```
+    POST /tasks/create
+    Content-Type: application/json
+    {
+      "taskName": "New Task",
+      "taskDescription": "This is a new task",
+      "deadline": "2023-01-12T22:00:00.000Z",
+      "taskCategory": {
+          "categoryName": "New Category",
+          "categoryDescription": "New Category Description"
+      }
+    }
+  ```
+    
+    
+* To edit a task:
+```
+PUT /tasks/update/{taskId}
 
 {
-"name": "Updated Task",
-"description": "This is an updated task",
-"deadline":"2022-10-20T22:00:00.000Z",
-"category": 2
+        "taskName": "Edited Task",
+        "taskDescription": "This is a new task aaaa",
+        "deadline": "2023-01-12T22:00:00",
+        "taskCategory": {
+            "categoryId": 2
+        }
 }
 ```
 
-4. Delete: To delete a task, you would make a DELETE request to the /tasks/{id} endpoint, where {id} is the ID of the task you want to delete.
+* To delete a task:
 ```
-DELETE /tasks/1
+DELETE /tasks/delete/{taskId}
 ```
 
+
+# Known Issue:
+* If a category gets deleted, all related tasks also get deleted
+* If you list a category, the related tasks are not listed (This is to prevent recursion resulting in an endless 
+response json. I don't know if there is a better solution for this problem. Currently, I am using ```JsonIgnoreProperties``` to prevent the problem)
+* There are no tests 
