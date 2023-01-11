@@ -5,5 +5,4 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface TaskRepository extends CrudRepository<Task, Long> {
-    // Additional custom methods can be defined here as needed
 }
